@@ -2,6 +2,7 @@ from typing import Union
 from fastapi import FastAPI
 from pydantic import BaseModel
 import mysql.connector
+import json
 
 app = FastAPI()
 
@@ -26,7 +27,7 @@ def read_root():
 
 
 @app.get("/item/{item}")
-def get_item(item):
+def get_item(item: str):
     cnx = mysql.connector.connect(user='root', password='11megan11',
                                   host='localhost',
                                   database='WM370BASD')
@@ -43,7 +44,7 @@ def get_item(item):
     tdesc = desc.strip()
     tharm = harm.strip()
 
-    return {"barcode": tbarcode, "Description": tdesc, "Harm Code": tharm}
+    return ['item', {"barcode": tbarcode, "Description": tdesc, "Harm Code": tharm}]
 
 
 
